@@ -35,9 +35,9 @@ def failTheCommand():
 if __name__ == '__main__':
     nvmeCommand = getNVMeCommand()
     if nvmeCommand[0] != 0xFF:
-        print 'CRAPI will fail this command'
+        print ('CRAPI will fail this command')
         failTheCommand()
 
-    print 'CRAPI will let cNVMe process this command'
+    print ('CRAPI will let cNVMe process this command')
     sys.exit(EXIT_CODE_CNVME_WILL_HANDLE)
 

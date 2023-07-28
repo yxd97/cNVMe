@@ -55,26 +55,27 @@ namespace cnvme
 				// Run all tests 2 times, multi-threaded
 				for (int i = 0; i < 2; i++)
 				{
-					results.push_back(std::async(pci::testPciHeaderId));
-					results.push_back(std::async(general::testLoopingThread));
-					results.push_back(std::async(controller_registers::testControllerReset));
-					results.push_back(std::async(commands::testNVMeCommandOpcodeInvalid));
-					results.push_back(std::async(commands::testNVMeCommandParsing));
-					results.push_back(std::async(commands::testNVMeFirmwareDownloadAndCommit));
-					results.push_back(std::async(commands::testNVMeIo));
-					results.push_back(std::async(commands::testNVMeQueueDeletionFailures));
-					results.push_back(std::async(driver::testNoDataCommandViaDriver));
-					results.push_back(std::async(driver::testReadCommandViaDriver));
-					results.push_back(std::async(prp::testDifferentPRPSizes));
-					results.push_back(std::async(prp::testDataIntoExistingPRP));
-					results.push_back(std::async(logging::testAsserting));
+					results.push_back(std::async(pci::testPciHeaderId));                        // 0
+					results.push_back(std::async(general::testLoopingThread));                  // 1
+					results.push_back(std::async(controller_registers::testControllerReset));   // 2
+					results.push_back(std::async(commands::testNVMeCommandOpcodeInvalid));      // 3
+					results.push_back(std::async(commands::testNVMeCommandParsing));            // 4
+					results.push_back(std::async(commands::testNVMeFirmwareDownloadAndCommit)); // 5
+					results.push_back(std::async(commands::testNVMeIo));                        // 6
+					results.push_back(std::async(commands::testNVMeQueueDeletionFailures));     // 7
+					results.push_back(std::async(driver::testNoDataCommandViaDriver));          // 8
+					results.push_back(std::async(driver::testReadCommandViaDriver));            // 9
+					results.push_back(std::async(prp::testDifferentPRPSizes));                  // 10
+					results.push_back(std::async(prp::testDataIntoExistingPRP));                // 11
+					results.push_back(std::async(logging::testAsserting));                      // 12
 				}
 
 				bool retVal = true;
-				for (auto &i : results)
-				{
-					retVal &= i.get();
-				}
+                for (size_t i = 0; i < results.size(); i++) {
+                    auto result = results[i].get();
+					retVal &= result;
+                    std::cout << "Result[" << i <<"] = " << result << std::endl;
+                }
 
 				return retVal;
 			}
@@ -594,7 +595,7 @@ namespace cnvme
 		{
 			bool testDifferentPRPSizes()
 			{
-				// Wide range of sizes to test les than a page, equal to a page, two pages, 
+				// Wide range of sizes to test les than a page, equal to a page, two pages,
 				//  and a scenario to queue a chained PRP list.
 				std::vector<UINT_32> dataXfrSizes = { 512, 4095, 4096, 4097, 8192, 8193, 4096 * 100 };
 
@@ -625,7 +626,7 @@ namespace cnvme
 
 			bool testDataIntoExistingPRP()
 			{
-				// Wide range of sizes to test les than a page, equal to a page, two pages, 
+				// Wide range of sizes to test les than a page, equal to a page, two pages,
 				//  and a scenario to queue a chained PRP list.
 				std::vector<UINT_32> dataXfrSizes = { 512, 4095, 4096, 4097, 8192, 8193, 4096 * 100 };
 
@@ -669,7 +670,7 @@ namespace cnvme
 						FAIL_IF(!didAssert, "There should have been an assert on an invalid payload size");
 
 						// Status will be messed with here. So clear.
-						cnvme::logging::theLogger.clearStatus();
+						// cnvme::logging::theLogger.clearStatus();
 
 						FAIL_IF(payloadWithData != prp.getPayloadCopy(), "With pageSize (" + std::to_string(pageSize) + \
 							") and payload size (" + std::to_string(dataSize) + "), the PRP's payload didn't match the original!");

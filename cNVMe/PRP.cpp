@@ -62,7 +62,7 @@ namespace cnvme
 		{
 			return *this;
 		}
-		
+
 		this->constructFromPayloadAndMemoryPageSize(other.getPayloadCopy(), other.MemoryPageSize);
 		return *this;
 	}
@@ -284,7 +284,7 @@ namespace cnvme
 
 		if (bytesRemaining > 0)
 		{
-			// PRP2 will be the next MPS or a pointer to a PRP list 
+			// PRP2 will be the next MPS or a pointer to a PRP list
 			ALLOC_BYTE_ARRAY(prp2Pointer, MemoryPageSize);
 
 			// If the remaining data size is less than a second memory page, just copy to that pointer

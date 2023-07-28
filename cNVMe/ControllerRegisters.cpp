@@ -292,7 +292,7 @@ namespace cnvme
 				CONTROLLER_REGISTERS* controllerRegisters = getControllerRegisters();
 				if (controllerRegisters)
 				{
-					return (UINT_32)pow(2, 12 + controllerRegisters->CC.MPS);
+					return (UINT_32)std::pow(2, 12 + controllerRegisters->CC.MPS);
 				}
 				ASSERT("Unable to get memory page size due to the controller registers being NULL");
 				return 0;
@@ -317,17 +317,17 @@ namespace cnvme
 					ControllerRegistersPointer->CAP.CSS = 1;    // NVM Command set
 					ControllerRegistersPointer->CAP.NSSRS = 1;  // NVM Subsystem Reset Supported
 					ControllerRegistersPointer->CAP.TO = 32;    // Worst case of 16 seconds
-					ControllerRegistersPointer->CAP.MQES = 0xFFFF; // At most 0xFFFF + 1 (zero based) queue entries 
+					ControllerRegistersPointer->CAP.MQES = 0xFFFF; // At most 0xFFFF + 1 (zero based) queue entries
 					ControllerRegistersPointer->CAP.CQR = 1;    // Must use contiguous queues
 
 					// NVMe 1.3
 					ControllerRegistersPointer->VS.MJR = 1;
 					ControllerRegistersPointer->VS.MNR = 3;
-					ControllerRegistersPointer->VS.TER = 0; 
+					ControllerRegistersPointer->VS.TER = 0;
 
 					// Todo: Interrupts
 
-					// Admin Queue persists 
+					// Admin Queue persists
 					ControllerRegistersPointer->AQA = AQA;
 					ControllerRegistersPointer->ASQ = ASQ;
 					ControllerRegistersPointer->ACQ = ACQ;

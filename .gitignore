@@ -250,3 +250,8 @@ ModelManifest.xml
 **/*.so
 **/*.pyc
 .cache/
+
+
+.vscode
+include
+lib

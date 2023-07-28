@@ -1,7 +1,7 @@
 '''
 Brief:
     Script to do a basic test of cNVMe
-        
+
 Author:
     Charles Machalow
 '''
@@ -23,18 +23,18 @@ def getOutputType():
     return 'EXE'
 
 def test_exe():
-    if getOutputType() != 'EXE':
-        pytest.skip("Skipping test since this is a dll build")
-        
+    # if getOutputType() != 'EXE':
+    #     pytest.skip("Skipping test since this is a dll build")
+
     assert findAndRunCnvme() == 0
 
 def test_dll():
-    if getOutputType() != 'DLL':
-        pytest.skip("Skipping test since this is an exe build")
-        
+    # if getOutputType() != 'DLL':
+    #     pytest.skip("Skipping test since this is an exe build")
+
     cnvme = getCnvmePath(getDllExtension())
     assert cnvme
-    print 'Found cNVMe dll: %s' % cnvme
+    print ('Found cNVMe dll: %s' % cnvme)
     dll = CDLL(cnvme)
     assert dll.Initialize() == 0
     assert dll.Uninitialize() == 0

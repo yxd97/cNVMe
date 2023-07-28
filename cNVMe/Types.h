@@ -89,7 +89,8 @@ typedef UINT_8 BYTE;
 #define BYTES_FROM_DWORDS(number) (number * sizeof(UINT_32))
 
 // Macros for getting False faster
-#define FAIL(s) LOG_ERROR(s); return false;
+// #define FAIL(s) LOG_ERROR(s); return false;
+#define FAIL(s) std::cerr << s << std::endl; return false;
 #define FAIL_IF(b, s); if (b) {FAIL(s);}
 
 #ifndef _WIN32
